@@ -1,0 +1,20 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+/* This is a single-line comment */
+p {
+  color: blue;
+} 
+h1{background-color: red;}
+</style>
+</head>
+<body>
+
+<p>Chính chào thế giới </p>
+<h1>đỏ lòm</h1>
+<p>CSS comments are not shown in the output.</p>
+
+</body>
+</html>

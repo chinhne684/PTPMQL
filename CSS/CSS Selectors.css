@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+p {
+  text-align: center;
+  color: green;
+} 
+#para1{
+ 
+  text-align: left;
+  color: dark;
+  }
+</style>
+</head>
+<body>
+
+<p>Trần Đức chính</p>
+<p id="para1">Me too!</p>
+<p>And me!</p>
+
+</body>
+</html>
+
+

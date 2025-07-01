@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+p.bad {
+  colr: blue;
+  font-size: 20px;
+}
+p{
+color:green
+
+</style>
+
+</head>
+<body>
+
+<h2>Trần Đức Chính</h2>
+
+<p class="bad">Màu xanh</p>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div {
+  border: 7px solid Green;
+  margin-top: 80px;
+  margin-bottom: 90px;
+  margin-right: 10px;
+  margin-left: 80px;
+  background-color: lightblue;
+}
+</style>
+</head>
+<body>
+
+<h2>Trần Đức Chính</h2>
+
+<div>Căn chỉnh border</div>
+
+</body>
+</html>
