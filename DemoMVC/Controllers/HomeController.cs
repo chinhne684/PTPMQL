@@ -12,7 +12,7 @@ public class HomeController : Controller
     {
         _logger = logger;
     }
-
+// PHẦN NHẬN YÊU CẦU
     public IActionResult Index()
     {
         return View();
