@@ -17,10 +17,12 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Address)
                 </th>
-                <th></th>
+                <th> 
+                     @Html.DisplayNameFor(model => model.Email)
+                </th>
             </tr>
         </thead>
-        <tboday>
+        <tbody>
             @foreach (var item in Model){
                 <tr>
                     <td>
@@ -30,12 +32,15 @@
                         @Html.DisplayFor(modelItem => item.Address)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
                         <a asp-action="Edit" asp-route-id="@item.PersonId">Edit</a> |
                         
                         <a asp-action="Delete" asp-route-id="@item.PersonId">Delete</a>
-                    </td>
+                        
                 </tr>
 
             }
-        </tboday>
+        </tbody>
     </table>
