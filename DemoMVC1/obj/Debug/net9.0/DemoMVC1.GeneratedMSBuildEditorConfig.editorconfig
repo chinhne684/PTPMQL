@@ -1,11 +1,19 @@
 is_global = true
 build_property.TargetFramework = net9.0
+build_property.TargetFramework = net9.0
+build_property.TargetPlatformMinVersion = 
 build_property.TargetPlatformMinVersion = 
 build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
 build_property.PlatformNeutralAssembly = 
 build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = DemoMVC1
 build_property.RootNamespace = DemoMVC1
@@ -42,6 +50,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/tranducchinh/Documents/PTPMQL/DemoMVC1/Views/Person/Bang.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGVyc29uL0JhbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/tranducchinh/Documents/PTPMQL/DemoMVC1/Views/Person/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGVyc29uL0NyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/tranducchinh/Documents/PTPMQL/DemoMVC1/Views/Person/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGVyc29uL0RlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/tranducchinh/Documents/PTPMQL/DemoMVC1/Views/Person/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGVyc29uL0VkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/tranducchinh/Documents/PTPMQL/DemoMVC1/Views/Person/Index4.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGVyc29uL0luZGV4NC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/tranducchinh/Documents/PTPMQL/DemoMVC1/Views/Person/Info.cshtml]
