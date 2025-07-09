@@ -49,12 +49,50 @@ namespace DemoMVC1.Controllers
             var model = await _context.Person.ToListAsync();
             return View(model);
       }
+/// <
+/// 
+/// 
+/// 
+/// 
+/// 
+       public IActionResult Create()
+{
+    var person = new Person();
 
-        public IActionResult Create()
+    // Lấy tất cả PersonId bắt đầu bằng "PS" và đúng 5 ký tự (ví dụ PS001)
+    var lastId = _context.Person
+        .Where(p => p.PersonId.StartsWith("PS") && p.PersonId.Length == 5)
+        .Select(p => p.PersonId)
+        .ToList()
+        .OrderByDescending(id => id) // sắp xếp giảm dần
+        .FirstOrDefault();
+
+    if (lastId != null)
+    {
+        // Tách phần số từ PS001
+        string numberPart = lastId.Substring(2);
+        if (int.TryParse(numberPart, out int number))
         {
-            return View();
+            // +1 rồi định dạng lại
+            person.PersonId = "PS" + (number + 1).ToString("D3");
         }
+        else
+        {
+            person.PersonId = "PS001"; // fallback
+        }
+    }
+    else
+    {
+        person.PersonId = "PS001"; // bản ghi đầu tiên
+    }
 
+    return View(person);
+}
+
+////
+/// 
+/// 
+/// 
         [HttpPost]
         [ValidateAntiForgeryToken]
 
@@ -68,7 +106,9 @@ namespace DemoMVC1.Controllers
             }
             return View(person);
         }
-
+/// 
+/// 
+/// 
         public async Task<IActionResult> Edit(string id)
         { 
             if (id == null || _context.Person == null)

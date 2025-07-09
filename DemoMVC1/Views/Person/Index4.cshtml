@@ -1,46 +1,53 @@
-@model IEnumerable<DemoMVC1.Models.Person> 
+@model IEnumerable<DemoMVC1.Models.Person>
 
 @{
-    ViewData ["Title"]="Index4";
+    ViewData["Title"] = "Index4";
 }
 <h1>Index4</h1>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.FullName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Address)
-                </th>
-                <th> 
-                     @Html.DisplayNameFor(model => model.Email)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model){
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FullName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.PersonId">Edit</a> |
-                        
-                        <a asp-action="Delete" asp-route-id="@item.PersonId">Delete</a>
-                        
-                </tr>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.First().PersonId)</th>
 
-            }
-        </tbody>
-    </table>
+          <th>@Html.DisplayNameFor(model => model.First().FullName)</th>
+
+           <th>@Html.DisplayNameFor(model => model.First().Address)</th>
+
+           <th>@Html.DisplayNameFor(model => model.First().Email)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PersonId)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PersonId">Edit</a> |
+
+                    <a asp-action="Delete" asp-route-id="@item.PersonId">Delete</a>
+                </td>
+
+            </tr>
+
+        }
+    </tbody>
+</table>

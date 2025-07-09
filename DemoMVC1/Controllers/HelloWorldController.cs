@@ -8,6 +8,7 @@ namespace DemoMVC1.Controllers
         // GET: /HelloWorld/
         public IActionResult Index()
         {
+            
             return View();
         } 
         // GET: /HelloWorld/Welcome/ 
