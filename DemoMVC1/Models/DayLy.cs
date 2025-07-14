@@ -3,22 +3,29 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DemoMVC1.Models
 {
+    [Table("DaiLy")]
     public class DaiLy
     {
         [Key]
-        public string? MaDaiLy { get; set; }
+        [Required]
+        public string MaDaiLy { get; set; } = string.Empty;
 
-        public string? TenDaiLy { get; set; }
+        [Required]
+        public string TenDaiLy { get; set; } = string.Empty;
 
-        public string? DiaChi { get; set; }
+        [Required]
+        public string DiaChi { get; set; } = string.Empty;
 
-        public string? NguoiDaiDien { get; set; }
+        [Required]
+        public string NguoiDaiDien { get; set; } = string.Empty;
 
-        public string? DienThoai { get; set; }
+        [Required]
+        public string DienThoai { get; set; } = string.Empty;
 
+        [Required]
         [ForeignKey("HeThongPhanPhoi")]
-        public string? MaHTPP { get; set; }
+        public string MaHTPP { get; set; } = string.Empty;
 
-        public HeThongPhanPhoi? HeThongPhanPhoi { get; set; }
+        public HeThongPhanPhoi HeThongPhanPhoi { get; set; } = new();
     }
 }
