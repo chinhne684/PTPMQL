@@ -3,6 +3,9 @@ using System.Text.Encodings.Web;
 using Microsoft.EntityFrameworkCore;
 using DemoMVC1.Models;
 using DemoMVC1.Data;
+using DemoMVC1.Models.Process;
+using System.Data;
+
 
 namespace DemoMVC1.Controllers
 {
@@ -35,9 +38,10 @@ namespace DemoMVC1.Controllers
         /// 
         /// </summary>
         private readonly ApplicationDbContext _context;
+        private ExcelProcess _excelProcess = new excelProcess();
 
         public PersonController(ApplicationDbContext context)
-        { 
+        {
             _context = context;
         }
 
@@ -48,51 +52,51 @@ namespace DemoMVC1.Controllers
         {
             var model = await _context.Person.ToListAsync();
             return View(model);
-      }
-/// <
-/// 
-/// 
-/// 
-/// 
-/// 
-       public IActionResult Create()
-{
-    var person = new Person();
-
-    // Lấy tất cả PersonId bắt đầu bằng "PS" và đúng 5 ký tự (ví dụ PS001)
-    var lastId = _context.Person
-        .Where(p => p.PersonId.StartsWith("PS") && p.PersonId.Length == 5)
-        .Select(p => p.PersonId)
-        .ToList()
-        .OrderByDescending(id => id) // sắp xếp giảm dần
-        .FirstOrDefault();
-
-    if (lastId != null)
-    {
-        // Tách phần số từ PS001
-        string numberPart = lastId.Substring(2);
-        if (int.TryParse(numberPart, out int number))
-        {
-            // +1 rồi định dạng lại
-            person.PersonId = "PS" + (number + 1).ToString("D3");
         }
-        else
+        /// <
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        public IActionResult Create()
         {
-            person.PersonId = "PS001"; // fallback
+            var person = new Person();
+
+            // Lấy tất cả PersonId bắt đầu bằng "PS" và đúng 5 ký tự (ví dụ PS001)
+            var lastId = _context.Person
+                .Where(p => p.PersonId.StartsWith("PS") && p.PersonId.Length == 5)
+                .Select(p => p.PersonId)
+                .ToList()
+                .OrderByDescending(id => id) // sắp xếp giảm dần
+                .FirstOrDefault();
+
+            if (lastId != null)
+            {
+                // Tách phần số từ PS001
+                string numberPart = lastId.Substring(2);
+                if (int.TryParse(numberPart, out int number))
+                {
+                    // +1 rồi định dạng lại
+                    person.PersonId = "PS" + (number + 1).ToString("D3");
+                }
+                else
+                {
+                    person.PersonId = "PS001"; // fallback
+                }
+            }
+            else
+            {
+                person.PersonId = "PS001"; // bản ghi đầu tiên
+            }
+
+            return View(person);
         }
-    }
-    else
-    {
-        person.PersonId = "PS001"; // bản ghi đầu tiên
-    }
 
-    return View(person);
-}
-
-////
-/// 
-/// 
-/// 
+        ////
+        /// 
+        /// 
+        /// 
         [HttpPost]
         [ValidateAntiForgeryToken]
 
@@ -106,11 +110,11 @@ namespace DemoMVC1.Controllers
             }
             return View(person);
         }
-/// 
-/// 
-/// 
+        /// 
+        /// 
+        /// 
         public async Task<IActionResult> Edit(string id)
-        { 
+        {
             if (id == null || _context.Person == null)
             {
                 return NotFound();
@@ -128,7 +132,7 @@ namespace DemoMVC1.Controllers
         [ValidateAntiForgeryToken]
 
         public async Task<IActionResult> Edit(string id, [Bind("PersonId, FullName, Address, Email")] Person person)
-        { 
+        {
             if (id != person.PersonId)
             {
                 return NotFound();
@@ -158,7 +162,7 @@ namespace DemoMVC1.Controllers
         }
 
         public async Task<IActionResult> Delete(string id)
-        { 
+        {
             if (id == null || _context.Person == null)
             {
                 return NotFound();
@@ -177,7 +181,7 @@ namespace DemoMVC1.Controllers
         [ValidateAntiForgeryToken]
 
         public async Task<IActionResult> DeleteConfirmed(string id)
-        { 
+        {
             if (_context.Person == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Person'  is null.");
@@ -195,12 +199,63 @@ namespace DemoMVC1.Controllers
 
         private bool PersonExists(string id)
         {
-    
+
             return (_context.Person.Any(e => e.PersonId == id));
         }
 
 
+        public async Task<IActionResult> Upload()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
 
+        public async Task<IActionResult> Upload(IFormFile file)
+        {
+            if (file != null)
+            {
+                string fileExtension = Path.GetExtension(file.FileName);
+                if (fileExtension != ".xls" && fileExtension != ".xlsx")
+                {
+                    ModelState.AddModelError("", "Please choose excel file to upload!");
+                }
+                else
+                {
+                    //rename file when upload to server
+                    var fileName = DateTime.Now.ToShortTimeString() + fileExtension;
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory() + "/Uploads/Excels", fileName);
+                    var fileLocation = new FileInfo(filePath).ToString();
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        //save file to server
+                        await file.CopyToAsync(stream);
+
+                        //read data from excel file fill DataTable
+                        ExcelProcess excelProcess = new ExcelProcess();
+                        DataTable dt = excelProcess.ExcelToDataTable(fileLocation);
+
+                        //using for loop to read data from dt
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+
+                            //create new Person object
+                            var ps = new Person();
+                            //set value to attributes
+                            ps.PersonId = dt.Rows[i][0].ToString();
+                            ps.FullName = dt.Rows[i][1].ToString();
+                            ps.Address = dt.Rows[i][2].ToString();
+                            //add object to context
+                            _context.Add(ps);
+                            await _context.SaveChangesAsync();
+
+                            return RedirectToAction(nameof(Index));
+                        }
+                    }
+                }
+            }
+            return View();
+        }
 
     }
 }
